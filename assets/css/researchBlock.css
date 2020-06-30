@@ -29,7 +29,7 @@
     position: relative;
     display: block;
 }
-.research-block-wrapper .list-wrap .thumbnail:before{
+.research-block-wrapper .list-wrap .thumbnail::before{
     content: '';
     position: absolute;
     left: 0;
@@ -40,9 +40,10 @@
     border: 5px solid transparent;
     transition: .25s;
     border-radius: 5px;
+    z-index: 20;
 }
-.research-block-wrapper .list-wrap .thumbnail.active:before{
-    border-color: #7fff00;
+.research-block-wrapper .list-wrap .thumbnail.active::before{
+    border-color: chartreuse;
 }
 .research-block-wrapper .list-wrap .thumbnail img{
     width: 100%;
