@@ -29,7 +29,7 @@
     position: relative;
     display: block;
 }
-.research-block-wrapper .list-wrap .thumbnail::before{
+.research-block-wrapper .list-wrap .thumbnail:before{
     content: '';
     position: absolute;
     left: 0;
@@ -41,7 +41,7 @@
     transition: .25s;
     border-radius: 5px;
 }
-.research-block-wrapper .list-wrap .thumbnail.active::before{
+.research-block-wrapper .list-wrap .thumbnail.active:before{
     border-color: chartreuse;
 }
 .research-block-wrapper .list-wrap .thumbnail img{
