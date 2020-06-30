@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>research block example</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/plugin/isotope.pkgd.min.js"></script>
+    <script src="https://npmcdn.com/isotope-cells-by-row@1.1.4/cells-by-row.js"></script>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/researchBlock.css">
+</head>
+<body>
+    <article class="research-block-wrapper">
+        <ul id="researchBlock" class="list-wrap clearfix"></ul>
+    </article>
+<script>
+var $researchBlockContainer = document.getElementById('researchBlock');
+var researchBlockElements = '';
+
+for (var j = 1; j < 10; j ++){
+    var forLength = 24;
+    var idx;
+    for (var i = 1; i < forLength; i++){
+        idx = (forLength * j) + i - forLength;
+        researchBlockElements += 
+        '<li class="list-con" data-checked="0">' +
+            '<div class="list-inner">' +
+                '<input type="checkbox" id="thumb' + idx + '" class="sorting-check">' +
+                '<label class="thumbnail" for="thumb' + idx + '">' +
+                    '<img src="assets/images/example' + i + '.jpg" alt="thumbnail">' +
+                '</label>' +
+            '</div>' +
+        '</li>';
+    }
+}
+
+$researchBlockContainer.innerHTML = researchBlockElements;
+
+var maxRowHeightValue = 0;
+var maxRowHeight = function(){
+    $('.research-block-wrapper .list-wrap .thumbnail').each(function () {
+        var thisHeight = $(this).outerHeight();
+        if (thisHeight > maxRowHeightValue) {
+            maxRowHeightValue = thisHeight;
+        }
+    });
+}
+
+var researchBlockGrid = $('.research-block-wrapper .list-wrap').imagesLoaded(function () {
+    maxRowHeight();
+    researchBlockGrid.isotope({
+        layoutMode: 'cellsByRow',
+        itemSelector: '.list-con',
+        cellsByRow: {
+            rowHeight: maxRowHeightValue
+        },
+        getSortData: {
+            isChecked: '[data-checked]'
+        },
+        sortAscending: false,
+        transitionDuration: 800,
+        sortBy: 'isChecked'
+    });
+});
+
+var $researchBlockThumbnail = $('.research-block-wrapper .list-wrap .thumbnail');
+
+$researchBlockThumbnail.on('click', function(){
+    var $this = $(this);
+    var isChk = $this.prev().is(":checked");
+    if (isChk){
+        $this.removeClass('active');
+        $this.parents('.list-con').attr({ 'data-checked' : '0' });
+    } else {
+        $this.addClass('active');
+        $this.parents('.list-con').attr({ 'data-checked' : '1' });
+    }
+    researchBlockGrid.isotope('updateSortData').isotope({
+        sortBy: 'isChecked'
+    });
+});
+</script>
+</body>
+</html>
