@@ -9,7 +9,7 @@ for (var j = 1; j < 10; j++) {
         researchBlockElements +=
             '<li class="list-con" data-unChk="1">' +
                 '<div class="list-inner">' +
-                    '<input type="checkbox" id="thumb' + idx + '" class="sorting-check">' +
+                    '<input type="checkbox" id="thumb' + idx + '" class="sorting-check" name="sortingCheck">' +
                     '<label class="thumbnail" for="thumb' + idx + '">' +
                         '<img src="assets/images/example' + i + '.jpg" alt="thumbnail">' +
                     '</label>' +
@@ -33,7 +33,6 @@ var maxRowHeight = function () {
 
 var researchBlockGrid = $('.research-block-wrapper .list-wrap').imagesLoaded(function () {
     maxRowHeight();
-    console.log(maxRowHeightValue);
     researchBlockGrid.isotope({
         layoutMode: 'cellsByRow',
         itemSelector: '.list-con',
@@ -48,19 +47,21 @@ var researchBlockGrid = $('.research-block-wrapper .list-wrap').imagesLoaded(fun
     });
 });
 
-var $researchBlockThumbnail = $('.research-block-wrapper .list-wrap .thumbnail');
+var $researchBlockThumbnails = document.querySelectorAll('.research-block-wrapper .list-wrap .thumbnail');
 
-$researchBlockThumbnail.on('click', function () {
-    var $this = $(this);
-    var isChk = $this.prev().is(":checked");
-    if (isChk) {
-        $this.removeClass('active');
-        $this.parents('.list-con').attr({ 'data-unChk': '1' });
-    } else {
-        $this.addClass('active');
-        $this.parents('.list-con').attr({ 'data-unChk': '0' });
-    }
-    researchBlockGrid.isotope('updateSortData').isotope({
-        sortBy: 'isChecked'
+$researchBlockThumbnails.forEach(function(thumbnail){
+    thumbnail.addEventListener('click', function () {
+        var chk = thumbnail.previousSibling.checked;
+        
+        if (chk) {
+            thumbnail.classList.remove('active');
+            thumbnail.closest('.list-con').setAttribute( 'data-unChk', '1' );
+        } else {
+            thumbnail.classList.add('active');
+            thumbnail.closest('.list-con').setAttribute( 'data-unChk', '0' );
+        }
+        researchBlockGrid.isotope('updateSortData').isotope({
+            sortBy: 'isChecked'
+        });
     });
 });
