@@ -37,7 +37,8 @@ var researchBlockGrid = $('.research-block-wrapper .list-wrap').imagesLoaded(fun
         layoutMode: 'cellsByRow',
         itemSelector: '.list-con',
         cellsByRow: {
-            rowHeight: maxRowHeightValue
+            //rowHeight: maxRowHeightValue
+            rowHeight: 320
         },
         getSortData: {
             isChecked: '[data-unChk]'
